@@ -14,11 +14,11 @@ func SetConfigFile(configName string) error {
 		return errors.New("empty config name while initing server")
 	}
 	//设置配置文件名称
-
-	name := strings.TrimSuffix(configName, filepath.Ext(configName))
+	dir := filepath.Dir(configName)
+	base := filepath.Base(configName)
+	name := strings.TrimSuffix(base, filepath.Ext(base))
 	viper.SetConfigName(name)
-	//设置配置文件查找路径
-	viper.AddConfigPath(".")
+	viper.AddConfigPath(dir)
 	err := viper.ReadInConfig()
 	if err != nil {
 		return errors.New("[initConfig] read config failed")
